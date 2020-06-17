@@ -1,0 +1,18 @@
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\bin\Debug\Mini Total Commander.exe.config
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\bin\Debug\Mini Total Commander.exe
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\bin\Debug\Mini Total Commander.pdb
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\Mini Total Commander.csprojAssemblyReference.cache
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\MainWindow.g.cs
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\View\TCpanel.g.cs
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\App.g.cs
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\Mini Total Commander_MarkupCompile.cache
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\Mini Total Commander_MarkupCompile.lref
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\MainWindow.baml
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\View\TCpanel.baml
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\Mini Total Commander.g.resources
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\Mini_Total_Commander.Properties.Resources.resources
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\Mini Total Commander.csproj.GenerateResource.cache
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\Mini Total Commander.csproj.CoreCompileInputs.cache
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\Mini Total Commander.exe
+C:\Users\Agent\Desktop\Szkola\Projekty C#\Mini Total Commander\obj\Debug\Mini Total Commander.pdb

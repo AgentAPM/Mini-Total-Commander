@@ -28,20 +28,22 @@ namespace Mini_Total_Commander.ViewModel
         #region konstruktory
         public TotalCommander()
         {
-
+            LeftPanelVM = new TCpanelVM();
+            RightPanelVM = new TCpanelVM();
         }
         #endregion
         #region Selection
+
         #endregion
         #region własności publiczne
-        public TCpanelVM leftPanel
+        public TCpanelVM LeftPanelVM
         {
-            set { leftVM = value; onPropertyChanged(nameof(leftPanel)); }
+            private set { leftVM = value; onPropertyChanged(nameof(LeftPanelVM)); }
             get { return leftVM; }
         }
-        public TCpanelVM rightPanel
+        public TCpanelVM RightPanelVM
         {
-            set { rightVM = value; onPropertyChanged(nameof(rightPanel)); }
+            private set { rightVM = value; onPropertyChanged(nameof(RightPanelVM)); }
             get { return rightVM; }
         }
         private void Copy(TCpanelVM from, TCpanelVM to)
@@ -51,10 +53,15 @@ namespace Mini_Total_Commander.ViewModel
         public RelayCommand CopyR
         {
             get
-            {/*
-                if (selectedL > 0 && selectedL < DcountL)
-                    Model.CopyDirectory(String.Format(@"{0}\{1}",pathL,selnameL), pathR);*/
-                Console.WriteLine("CopyR");
+            {
+                /*
+                if (selectedL < 0)
+                    return CopyR;
+                else if( selectedL < DcountL)
+                    Model.CopyDirectory(String.Format(@"{0}\{1}",pathL,selnameL), pathR);
+                else if(selectedL < DcountL)
+                    Model.CopyFile(String.Format(@"{0}\{1}", pathL, selnameL), pathR);*/
+
                 return copyR;
             }
         }
@@ -70,7 +77,7 @@ namespace Mini_Total_Commander.ViewModel
         {
             var subdirs = Model.GetDirectories(path);
             var files = Model.GetFiles(path);
-            for (int i=subdirs.Count;i>0;)
+            for (int i = subdirs.Count; i > 0;) 
                 subdirs[--i] = DirectoryPrefix + subdirs[i];
             List<string> output = new List<string>(1+subdirs.Count+files.Count);
             output.Add(GoBack);

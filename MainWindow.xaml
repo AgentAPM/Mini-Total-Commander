@@ -9,11 +9,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
-        <vm:TotalCommander x:Key="ViewModel"/>
-        <vm:TCpanelVM x:Key="LpanelVM"/>
-        <vm:TCpanelVM x:Key="RpanelVM"/>
+        <vm:TotalCommander x:Key="MainViewModel"/>
+        
     </Window.Resources>
-    <Grid DataContext="ViewModel">
+    <Grid DataContext="{StaticResource MainViewModel}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -25,23 +24,23 @@
             <v:TCpanel x:Name="PanelL"
                 Grid.Column="0" Grid.Row="0"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                ViewModel="{Binding LeftPanelVM}"
             />
             <v:TCpanel x:Name="PanelR"
                 Grid.Column="1" Grid.Row="0"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                ViewModel="{Binding RightPanelVM}"
             />
-        <Button x:Name="CopyL" Command="{Binding Path=DataContext.CopyL, RelativeSource={RelativeSource AncestorType=Window}}"
+        <Button x:Name="CopyL" 
             Grid.Column="0" Grid.Row="1"
             HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="32"
             Content="Kopiuj"
             
             />
-        <Button x:Name="CopyR" Command="{Binding Path=DataContext.CopyR, RelativeSource={RelativeSource AncestorType=Window}}"
+        <Button x:Name="CopyR"
             Grid.Column="1" Grid.Row="1"
             HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="32"
             Content="Kopiuj"
             />
-
-
     </Grid>
 </Window>

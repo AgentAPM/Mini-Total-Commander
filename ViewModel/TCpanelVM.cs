@@ -5,12 +5,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Mini_Total_Commander.ViewModel
 {
-    class TCpanelVM : BaseClass.ViewModelBase
+    public class TCpanelVM : BaseClass.ViewModelBase
     {
         #region pola prywatne
+        FileBrowser Model = new FileBrowser();
+
         private List<string> availableDrives;
         private List<string> directoryContent;
         private string currentDrive;
@@ -18,7 +21,6 @@ namespace Mini_Total_Commander.ViewModel
         private string currentContent;
         const string GoBack = "..";
         const string DirectoryPrefix = "<d> ";
-        FileManager Model = new FileManager();
         #endregion
         #region własności publiczne
         public List<string> AvailableDrives
@@ -30,10 +32,8 @@ namespace Mini_Total_Commander.ViewModel
                 return availableDrives;
             }
         }
-        public List<string> DirectoryContent
+        private void UpdateDirectoryContent()
         {
-            get
-            {
                 directoryContent = new List<string>();
                 directoryContent.Add(GoBack);
                 var Dirs = Model.GetDirectories(currentPath);
@@ -42,6 +42,11 @@ namespace Mini_Total_Commander.ViewModel
                 var Files = Model.GetFiles(currentPath);
                 for (int i = Files.Count; i-- > 0; Files[i] = DirectoryPrefix + Files[i]);
                 directoryContent.Concat(Files);
+        }
+        public List<string> DirectoryContent
+        {
+            get
+            {
                 return directoryContent;
             }
         }
@@ -77,6 +82,13 @@ namespace Mini_Total_Commander.ViewModel
             CurrentPath = currentDrive;
             var t = CurrentContent;
         }
+
+
+        public string TestProperty
+        {
+            get { return "test"; }
+        }
         #endregion
+
     }
 }

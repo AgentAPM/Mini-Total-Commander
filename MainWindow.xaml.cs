@@ -25,7 +25,9 @@ namespace Mini_Total_Commander
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new TotalCommander();
+            var ViewModel = new TotalCommander();
+            PanelL.DataContext = ViewModel.LeftPanelVM;
+            PanelR.DataContext = ViewModel.RightPanelVM;
             
         }
 

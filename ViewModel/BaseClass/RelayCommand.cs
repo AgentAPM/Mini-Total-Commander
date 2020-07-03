@@ -33,8 +33,8 @@ namespace Mini_Total_Commander.ViewModel.BaseClass
         {
             if (execute == null)
                 throw new ArgumentNullException(nameof(execute));
-            else
-                _execute = execute;
+            
+            _execute = execute;
             _canExecute = canExecute;
         }
         #endregion

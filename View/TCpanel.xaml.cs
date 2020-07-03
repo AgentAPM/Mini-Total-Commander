@@ -1,4 +1,5 @@
 ﻿using Mini_Total_Commander.ViewModel;
+using Mini_Total_Commander.ViewModel.BaseClass;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,12 +21,37 @@ namespace Mini_Total_Commander.View
 {
     public partial class TCpanel : UserControl
     {
+        TCpanelVM viewModel;
+
         #region konstruktory
         public TCpanel()
         {
-            this.DataContext = new TCpanelVM();
             InitializeComponent();
         }
         #endregion
+        #region własności publiczne
+        public string TotalPath {
+            get { return "WIP"; }
+            set { }
+        }
+        public TCpanelVM ViewModel
+        {
+            get { return (TCpanelVM)GetValue(getViewModel); }
+            set { SetValue(getViewModel, value); }
+        }
+
+    #endregion
+    public static readonly DependencyProperty getViewModel =
+        DependencyProperty.Register("ViewModel", typeof(TCpanelVM), typeof(TCpanel), new PropertyMetadata(null));
+
+        private void ChooseDrive(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Opened(object sender, ContextMenuEventArgs e)
+        {
+
+        }
     }
 }

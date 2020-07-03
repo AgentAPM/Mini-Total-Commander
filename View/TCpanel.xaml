@@ -10,28 +10,34 @@
     <UserControl.Resources>
         <vm:TCpanelVM x:Key="panelViewModel"/>
     </UserControl.Resources>
-    <Grid DataContext="panelViewModel">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label x:Name="dirPath" x:FieldModifier="private"
-            Content="{Binding CurrentPath, Mode=TwoWay}" FontSize="16"
+            Content="{Binding ViewModel.TestProperty,
+                        RelativeSource={
+                                        RelativeSource Mode=FindAncestor, 
+                                        AncestorType={x:Type local:TCpanel}
+                                       }
+                     }" 
+            FontSize="16"
             Grid.Row="0" 
-            HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="64,0,0,0"
-            Width="794"
+            HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Margin="32,0,0,0"
+            
                />
         <ComboBox x:Name="drives" x:FieldModifier="private"
             Grid.Row="0" HorizontalAlignment="Left" 
-            ItemsSource="{Binding AvailableDrives, Mode=OneWay}" 
-            SelectionChanged="{Binding Path=LoadDrive}"
             
+            SelectionChanged="ChooseDrive"
+            ContextMenuOpening="Opened"
             />
 
         <ListBox x:Name="dirContent" x:FieldModifier="private"
-            ItemsSource="{Binding ContentList, Mode=OneWay}"
             Grid.Row="1"
             />
+
 
     </Grid>
 </UserControl>

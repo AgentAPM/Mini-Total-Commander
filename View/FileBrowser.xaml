@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Total_Commander.View.FileBrowser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Total_Commander.View"
+        mc:Ignorable="d"
+         Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="dirPath" Grid.Row="0" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="64,0,0,0" Width="794" FontSize="16" />
+        <ComboBox x:Name="drivePick" Grid.Row="0" HorizontalAlignment="Left" 
+            DropDownOpened="ReloadDrives"  
+            SelectionChanged="NewDrivePicked"
+            />
+
+        <ListBox x:Name="dirContent" Grid.Row="1"
+             MouseDoubleClick="Event_MouseDoubleClick"
+             >
+            
+        </ListBox>
+        
+    </Grid>
+</UserControl>

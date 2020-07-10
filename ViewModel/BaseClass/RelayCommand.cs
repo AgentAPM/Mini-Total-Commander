@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
+    using System.Windows.Input;
 
-namespace Mini_Total_Commander.ViewModel.BaseClass
+namespace Total_Commander.ViewModel.BaseClass
 {
+    //tworzymy klasę uniwesalną określającą czym jest dowolne polecenie, gdzie 
+    //zachowanie tego polecenia wstrzykujemy poprzez metody będące argumentami konstruktora
+
+    //klasa żeby mogła określać typ polecenia implementuje interfejs ICommand
     class RelayCommand : ICommand
     {
         #region pola prywatne

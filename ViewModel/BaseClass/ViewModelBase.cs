@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
-namespace Mini_Total_Commander.ViewModel.BaseClass
+namespace Total_Commander.ViewModel.BaseClass
 {
     class ViewModelBase : INotifyPropertyChanged
     {

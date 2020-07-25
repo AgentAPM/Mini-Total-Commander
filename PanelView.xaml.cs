@@ -17,13 +17,12 @@ using System.Windows.Shapes;
 namespace MiniTotalCommander
 {
     /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
+    /// Logika interakcji dla klasy PanelView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PanelView : UserControl
     {
-        public MainWindow()
+        public PanelView()
         {
             InitializeComponent();
         }
-    }
 }

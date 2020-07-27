@@ -1,5 +1,4 @@
-﻿using Mini_Total_Commander.ViewModel;
-using Mini_Total_Commander.ViewModel.BaseClass;
+﻿using MiniTotalCommander.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +14,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Mini_Total_Commander
+namespace MiniTotalCommander
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new TotalCommander();
-            
         }
-
     }
 }

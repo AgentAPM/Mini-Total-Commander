@@ -6,30 +6,29 @@
              xmlns:local="clr-namespace:MiniTotalCommander"
              xmlns:vm="clr-namespace:MiniTotalCommander.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <vm:PanelViewModel x:Key="panelviewmodel" x:Name="panelviewmodel"/>
-    </UserControl.Resources>
-    <Grid DataContext="{StaticResource panelviewmodel}">
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="Root">
+    
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="4"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ComboBox x:Name="drivesPick" x:FieldModifier="private"
-                  Width="32" HorizontalAlignment="Left"
-                  ItemsSource="{Binding DrivesList}"
-                  SelectedItem="{Binding SelectedDrive}"
-                  />
+            Width="32" HorizontalAlignment="Left"
+            DropDownOpened="CallDrivesOpen"
+            ItemsSource="{Binding ElementName=Root, Path=DrivesList}"
+            />
         <TextBox x:Name="pathDisplay" x:FieldModifier="private"
-                 HorizontalAlignment="Stretch" Margin="36,0,0,0"
-                 Text="{Binding TotalPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 />
+            HorizontalAlignment="Stretch" Margin="36,0,4,0"
+            Text="{Binding Path=TotalPath, Mode=TwoWay}"
+            />
         <ListBox x:Name="itemPick" x:FieldModifier="private"
-                 Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                 ItemsSource="{Binding ItemsList}"
-                 SelectedItem="{Binding SelectedItem}" SelectedIndex="{Binding SelectedIndex}"
-                 MouseDoubleClick="{Binding DoubleClickItem, RelativeSource={RelativeSource AncestorType={x:Type vm:PanelViewModel}}}"
-                 />
+            Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+            ItemsSource="{Binding ElementName=Root, Path=ItemsList}"
+            MouseDoubleClick="CallDoubleClickItem"
+            />
+        
     </Grid>
 </UserControl>

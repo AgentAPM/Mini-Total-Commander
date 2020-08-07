@@ -13,75 +13,59 @@ namespace MiniTotalCommander.ViewModel
 {
     class MainViewModel : ViewModelBase
     {
-        #region dane paneli
-        PanelViewModel panelL;
-        PanelViewModel panelR;
-        public PanelViewModel PanelL => panelL;
-        public PanelViewModel PanelR => panelR;
-        CopyService copyService;
-        public CopyService Model
-        {
-            get { if (copyService == null) copyService = new CopyService(); return copyService; }
-            set { copyService = value; }
+        #region modele widoku
+        private PanelViewModel panelLvm;
+        public PanelViewModel PanelLvm { get { return panelLvm; } }
+        private PanelViewModel panelRvm;
+        public PanelViewModel PanelRvm { get { return panelRvm; } }
+
+        #endregion
+        #region elementy widoku
+        private RelayCommand copyLrc;
+        public RelayCommand CopyL {
+            get {
+                if (copyLrc == null)
+                    copyLrc = new RelayCommand( arg => { Copy(panelRvm, panelLvm); }, 
+                                                arg => { return panelLvm.Valid && panelRvm.Valid; });
+                return copyLrc;
+            }
         }
-        FileBrowser fileBrowser;
-        public FileBrowser Validation
-        {
-            get { if (fileBrowser == null) fileBrowser = new FileBrowser(); return fileBrowser; }
-            set { fileBrowser = value; }
+        private RelayCommand copyRrc;
+        public RelayCommand CopyR {
+            get {
+                if (copyRrc == null)
+                    copyRrc = new RelayCommand( arg => { Copy(panelLvm, panelRvm); }, 
+                                                arg => { return panelLvm.Valid && panelRvm.Valid; });
+                return copyLrc;
+            }
         }
         #endregion
-        #region komendy
-        RelayCommand copyL;
-        RelayCommand copyR;
-        public RelayCommand CopyL
-        {
-            get
-            {
-                if (copyL == null)
-                    copyL = new RelayCommand(
-                                            arg => { Copy(PathR, PathL); }, 
-                                            arg => true
-                                            );
-                return copyL;
-            }
-        }
-        public RelayCommand CopyR
-        {
-            get
-            {
-                if (copyR == null)
-                    copyR = new RelayCommand(
-                                            arg => { Copy(PathL, PathR); }, 
-                                            arg => true
-                                            );
-                return copyR;
-            }
-        }
 
-        private void Copy(string from, string to)
+        #region metody
+        private void Copy(PanelViewModel from, PanelViewModel to)
         {
-            if (Validation.IsDir(to))
-            {
-                if (Validation.IsFile(from))
-                {
-                    copyService.CopyFile(from, to);
+            if (from.SelectedItem == null || from.SelectedItem == "" || !to.Valid)
+                return;
+            if (FileBrowser.IsDir(to.SelectedItem)) {
+                if (FileBrowser.IsFile(from.SelectedItem)) {
+                    CopyService.CopyFile(from.SelectedItem, to.TotalPath);
                 }
-                else if (Validation.IsDir(from))
-                {
+                else if (FileBrowser.IsDir(from.SelectedItem)) {
                     var dialog = MessageBox.Show($"Przekopiować folder wraz z całą jego zawartością?", "Uwaga", MessageBoxButton.YesNoCancel);
-                    if (dialog != MessageBoxResult.Cancel) 
-                        copyService.CopyDirectory(from, to, dialog == MessageBoxResult.Yes);
+                    if (dialog != MessageBoxResult.Cancel)
+                    {
+                        CopyService.CopyDirectory(from.SelectedItem, to.TotalPath, dialog == MessageBoxResult.Yes);
+                        to.TotalPath = to.TotalPath; //Reload the panel
+                    }
                 }
-                    
             }
         }
         #endregion
 
         public MainViewModel()
         {
-            panelL = new PanelViewModel();
-            panelR = new PanelViewModel();
+            panelLvm = new PanelViewModel();
+            panelRvm = new PanelViewModel();
         }
     }
 }

@@ -12,11 +12,11 @@ namespace MiniTotalCommander.Services
     {
         private event Action DirectoryContentInaccessible;
         private event Action<string> ItemAlreadyExists; 
-        public void CopyFile(string source, string destination)
+        public static void CopyFile(string source, string destination)
         {
             File.Copy(source, destination);
         }
-        public void CopyDirectory(string source, string destination, bool recursive=true)
+        public static void CopyDirectory(string source, string destination, bool recursive=true)
         {
             DirectoryInfo sourceInfo=null, destInfo=null;
             FileInfo[] filesToCopy=null; DirectoryInfo[] directoriesToCopy = null;

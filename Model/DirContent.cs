@@ -55,7 +55,7 @@ namespace MiniTotalCommander.Model
         {
             //  Take data from a path
             //  if problem occured, fill values empty
-            if (path == null || path == "") {
+            if (path == null || path == "" || !Directory.Exists(path)) {
                 loaded = false;
                 cangoback = false;
                 currentpath = "";
@@ -80,7 +80,7 @@ namespace MiniTotalCommander.Model
         {
             //  Take data from a path
             //  if problem occured, keep the previous state
-            if (path != null && path != "") {
+            if (path != null && path != "" || !Directory.Exists(path)) {
                 try
                 {
                     bool tryCGB = Directory.GetParent(path) != null;

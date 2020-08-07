@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using MiniTotalCommander.Model;
 using MiniTotalCommander.Services;
 using MiniTotalCommander.ViewModel.Base;
 
@@ -10,79 +13,116 @@ namespace MiniTotalCommander.ViewModel
 {
     class PanelViewModel : ViewModelBase
     {
-        #region pola prywatne
-        FileBrowser fileBrowser;
-
-        List<string> itemslist;
-        int selectedindex;
-        List<string> driveslist;
-        string totalpath;
+        #region modele
+        DirContent currentdir;
 
         #endregion
-        #region własności
-        public PanelViewModel ViewModel
-        {
-            get { return this; }
+        #region elementy widoku
+        private string totalpath;
+        public string TotalPath {
+            get {
+                return totalpath;
+            }
+            set {
+                totalpath = currentdir.TryChangeDir(value);
+                onPropertyChanged(nameof(TotalPath));
+                //ItemList should be updated together with the path
+                itemlist = null;
+                onPropertyChanged(nameof(ItemList));
+            }
         }
-        public FileBrowser GetService
+
+        private ObservableCollection<string> itemlist;
+        public ObservableCollection<string> ItemList {
+            get {
+                if (itemlist == null) 
+                    itemlist = new ObservableCollection<string>(currentdir.StringArray);
+                return itemlist;
+            } 
+        }
+        private int itemindex;
+        public int SelectedItemIndex
         {
-            get
-            {
-                if (fileBrowser == null)
-                    fileBrowser = new FileBrowser();
-                return fileBrowser;
+            get { return itemindex; }
+            set {
+                itemindex = value;
+                onPropertyChanged(nameof(SelectedItemIndex));
+            }
+        }
+        public string SelectedItem { get { return currentdir.GetAt(SelectedItemIndex); } }
+        private RelayCommand doubleclickitemRC;
+        public RelayCommand DoubleClickItem {
+            get {
+                if (doubleclickitemRC == null)
+                    doubleclickitemRC = new RelayCommand(arg => { EnterCurrentPath(); }, arg => true);
+                return doubleclickitemRC;
+            }
+        }
+
+
+        ObservableCollection<string> drivelist;
+        public ObservableCollection<string> DrivesList {
+            get { return drivelist; } 
+            private set {
+                drivelist = value;
+                onPropertyChanged(nameof(DrivesList));
+            }
+        }
+        private int driveindex;
+        public int SelectedDriveIndex {
+            get { return driveindex; }
+            set {
+                driveindex = value;
+                onPropertyChanged(nameof(SelectedDriveIndex));
+            }
+        }
+        public string SelectedDrive
+        {
+            get { return DrivesList[SelectedDriveIndex]; }
+        }
+
+
+        private RelayCommand driveboxopenedRE;
+        public RelayCommand DriveBoxOpened {
+            get {
+                if (driveboxopenedRE == null)
+                    driveboxopenedRE = new RelayCommand(arg => { LoadAvailableDrives(); }, arg => true);
+                return driveboxopenedRE; 
+            }
+        }
+
+        private RelayCommand driveselectionchangedRE;
+        public RelayCommand DriveSelectionChanged {
+            get {
+                if (driveselectionchangedRE == null)
+                    driveselectionchangedRE = new RelayCommand(arg => { EnterDriveRoot(); }, arg => true);
+                return driveboxopenedRE; 
             }
         }
         #endregion
-        #region elementy widoku
-        public List<string> DrivesList { 
-            get {
-                return GetService.GetDrives();
-            } 
-        }
-        public string SelectedDrive { get; }
-        public string TotalPath {
-            get { return totalpath; } 
-            set {
-                if (GetService.IsDir(value))
-                {
-                    totalpath = value;
-                    onPropertyChanged(nameof(TotalPath));
-                } 
-            } 
-        }
-        public List<string> ItemsList {
-            get { return itemslist; } 
-            set { itemslist = value; onPropertyChanged(nameof(ItemsList)); } 
-        }
-        public int SelectedIndex { 
-            get { return selectedindex; } 
-            set { selectedindex = value; onPropertyChanged(nameof(SelectedIndex)); } 
-        }
-        public string SelectedItem { get; }
-        public bool DirSelected { get; }
-        #endregion
         #region metody
-        public bool IsPathValid()
+        public PanelViewModel()
         {
-            return TotalPath != null && TotalPath != "";
+            currentdir = new DirContent(null);
         }
-        private void ChangeDir()
+        public void LoadAvailableDrives()
         {
-            if(SelectedIndex > -1)
-                TotalPath = GetService.ChangeDirectory(TotalPath,SelectedItem);  
+            ObservableCollection<string> output = new ObservableCollection<string>();
+            foreach (var x in FileBrowser.GetDrives())
+                output.Add(x);
+            DrivesList = output;
         }
-        private void ReloadDrives()
+        public void EnterDriveRoot() { 
+            TotalPath = SelectedDrive;
+        }
+        public void EnterCurrentPath() 
         {
-            driveslist = GetService.GetDrives();
+            TotalPath = FileBrowser.ChangeDirectory(TotalPath, currentdir.GetAt(SelectedItemIndex));
         }
+
         #endregion
-        #region komendy
-        public void DoubleClickItem()
-        {
-            GetService.ChangeDirectory(TotalPath, SelectedItem);
-        }
-            
+        #region własności
+        public bool Valid { get { return currentdir.Valid; } }
         #endregion
     }
 }

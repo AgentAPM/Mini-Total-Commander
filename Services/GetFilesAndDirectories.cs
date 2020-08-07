@@ -9,31 +9,31 @@ namespace MiniTotalCommander.Services
 {
     class FileBrowser
     {
-        public List<string> GetFiles(string path)
+        public static string[] GetFiles(string path)
         {
-            List<string> output = new List<string>();
             FileInfo[] files = new DirectoryInfo(path).GetFiles();
-            foreach (var f in files)
-                output.Add(f.Name);
+            string[] output = new string[files.Length];
+            int i = 0; foreach (var f in files)
+                output[i++] = f.Name;
             return output;
         }
-        public List<string> GetDirectories(string path)
+        public static string[] GetDirectories(string path)
         {
-            List<string> output = new List<string>();
             DirectoryInfo[] dirs = new DirectoryInfo(path).GetDirectories();
-            foreach (var d in dirs)
-                output.Add(d.Name);
+            string[] output = new string[dirs.Length];
+            int i = 0; foreach (var d in dirs)
+                output[i++] = d.Name;
             return output;
         }
-        public List<string> GetDrives()
+        public static string[] GetDrives()
         {
-            List<string> output = new List<string>();
             DriveInfo[] drives = DriveInfo.GetDrives();
-            foreach (var dr in drives)
-                output.Add(dr.Name);
+            string[] output = new string[drives.Length];
+            int i = 0; foreach (var d in drives)
+                output[i++] = d.Name;
             return output;
         }
-        public string ChangeDirectory(string path)
+        public static string ChangeDirectory(string path)
         {
             if (path == null || path == "") throw (new Exception("Null or empty source"));
             try
@@ -43,7 +43,7 @@ namespace MiniTotalCommander.Services
             }
             catch (Exception) { throw; }
         }
-        public string ChangeDirectory(string source, string enter)
+        public static string ChangeDirectory(string source, string enter)
         {
             if (source == null || source == "") throw (new Exception("Null or empty source"));
             if (enter == null || enter == "") throw (new Exception("Null or empty enter"));
@@ -54,7 +54,7 @@ namespace MiniTotalCommander.Services
             }
             catch (Exception) { throw; }
         }
-        public bool IsDir(string path)
+        public static bool IsDir(string path)
         {
             if (Directory.Exists(path))
             {
@@ -68,7 +68,7 @@ namespace MiniTotalCommander.Services
             }
             else return false;
         }
-        public bool IsFile(string path)
+        public static bool IsFile(string path)
         {
             return File.Exists(path);
         }

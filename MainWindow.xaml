@@ -1,47 +1,78 @@
-﻿<Window x:Class="Mini_Total_Commander.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Mini_Total_Commander"
-        xmlns:vm="clr-namespace:Mini_Total_Commander.ViewModel"
-        xmlns:v="clr-namespace:Mini_Total_Commander.View"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+﻿<Window x:Class="MiniTotalCommander.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:MiniTotalCommander"
+    xmlns:vm="clr-namespace:MiniTotalCommander.ViewModel"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    mc:Ignorable="d"
+    Title="Mini Total Commander" Height="450" Width="800"
+    x:Name="Root"    
+    >
+
     <Window.Resources>
-        <vm:TotalCommander x:Key="ViewModel"/>
-        <vm:TCpanelVM x:Key="LpanelVM"/>
-        <vm:TCpanelVM x:Key="RpanelVM"/>
+        <vm:MainViewModel x:Key="mainviewmodel"/>
     </Window.Resources>
-    <Grid DataContext="ViewModel">
+    <Grid DataContext="{StaticResource mainviewmodel}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="48"/>
         </Grid.RowDefinitions>
-            <v:TCpanel x:Name="PanelL"
-                Grid.Column="0" Grid.Row="0"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-            />
-            <v:TCpanel x:Name="PanelR"
-                Grid.Column="1" Grid.Row="0"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-            />
-        <Button x:Name="CopyL" Command="{Binding Path=DataContext.CopyL, RelativeSource={RelativeSource AncestorType=Window}}"
+
+        <local:PanelView x:Name="panelL"
+            Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                     TotalPath="{Binding PanelLvm.TotalPath, Mode=TwoWay}"
+                    DrivesList="{Binding PanelLvm.DrivesList}"
+            SelectedDriveIndex="{Binding PanelLvm.SelectedDriveIndex, Mode=TwoWay}"
+                     ItemsList="{Binding PanelLvm.ItemList}"
+             SelectedItemIndex="{Binding PanelLvm.SelectedItemIndex,Mode=TwoWay}"
+            >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="DrivesOpen">
+                    <i:InvokeCommandAction Command="{Binding PanelLvm.DriveBoxOpened}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="DoubleClickItem">
+                    <i:InvokeCommandAction Command="{Binding PanelLvm.DoubleClickItem}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="DriveSelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding PanelLvm.DriveSelectionChanged}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </local:PanelView>
+        <Button x:Name="CopyRbutton"
             Grid.Column="0" Grid.Row="1"
             HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="32"
-            Content="Kopiuj"
-            
+            Content="Kopiuj" Command="{Binding CopyR}"
             />
-        <Button x:Name="CopyR" Command="{Binding Path=DataContext.CopyR, RelativeSource={RelativeSource AncestorType=Window}}"
+        <local:PanelView x:Name="panelR"
+            Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                     TotalPath="{Binding PanelRvm.TotalPath, Mode=TwoWay}"
+                    DrivesList="{Binding PanelRvm.DrivesList}"
+            SelectedDriveIndex="{Binding PanelRvm.SelectedDriveIndex, Mode=TwoWay}"
+                     ItemsList="{Binding PanelRvm.ItemList}"
+             SelectedItemIndex="{Binding PanelRvm.SelectedItemIndex, Mode=TwoWay}"
+            >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="DrivesOpen">
+                    <i:InvokeCommandAction Command="{Binding PanelRvm.DriveBoxOpened}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="DoubleClickItem">
+                    <i:InvokeCommandAction Command="{Binding PanelRvm.DoubleClickItem}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="DriveSelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding PanelRvm.DriveSelectionChanged}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </local:PanelView>
+        <Button x:Name="CopyLbutton"
             Grid.Column="1" Grid.Row="1"
             HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="32"
-            Content="Kopiuj"
+            Content="Kopiuj" Command="{Binding CopyL}"
             />
-
-
     </Grid>
 </Window>

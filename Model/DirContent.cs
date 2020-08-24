@@ -55,7 +55,7 @@ namespace MiniTotalCommander.Model
         {
             //  Take data from a path
             //  if problem occured, fill values empty
-            if (path == null || path == "") {
+            if (path == null || path == "" || !Directory.Exists(path)) {
                 loaded = false;
                 cangoback = false;
                 currentpath = "";
@@ -68,7 +68,7 @@ namespace MiniTotalCommander.Model
                     currentpath = FileBrowser.ChangeDirectory(path);
                     subfiles = FileBrowser.GetFiles(path);
                     subdirs = FileBrowser.GetDirectories(path);
-                    stringlist = null;
+                    stringlist = BuildStringArray();
                     loaded = true;
                 } catch (Exception) {
                     ChangeDir(null);
@@ -80,7 +80,7 @@ namespace MiniTotalCommander.Model
         {
             //  Take data from a path
             //  if problem occured, keep the previous state
-            if (path != null && path != "") {
+            if (path != null && path != "" || !Directory.Exists(path)) {
                 try
                 {
                     bool tryCGB = Directory.GetParent(path) != null;
@@ -93,6 +93,7 @@ namespace MiniTotalCommander.Model
                     subdirs = trySD;
                     subfiles = trySF;
                     loaded = true;
+                    stringlist = BuildStringArray();
                 } catch (Exception) {}
             }
             return currentpath;
@@ -113,9 +114,37 @@ namespace MiniTotalCommander.Model
                 output[i++] = fileprefix + f;
             return output;
         }
+
+        public bool IsDir(int index)
+        {
+            if (index < 0) return false;
+            //Check if index is goback
+            if(cangoback){
+                if (index == 0)
+                    return true;
+                index -= 1;
+            }
+            //Check if index is subdirectory
+            if (index < subdirs.Length)
+                return true;
+            index -= subdirs.Length;
+            return false;
+        }
+        public bool IsFile(int index)
+        {
+            if(cangoback)
+                index -= 1;             //Skip the goback
+            index -= subdirs.Length;    //Skip all subdirectories
+            if (index < 0) return false;
+            //Check if index is subfile
+            if (index < subfiles.Length)
+                return true;
+            return false;
+        }
         #endregion
         #region własności publiczne
         public bool Valid { get { return loaded; } }
+        public bool CanGoBack { get { return cangoback; } }
         public string[] StringArray
         {
             get {
@@ -127,6 +156,7 @@ namespace MiniTotalCommander.Model
         public string TotalPath
         {
             get { return currentpath; }
+            set { TryChangeDir(value); }
         }
         #endregion
     }

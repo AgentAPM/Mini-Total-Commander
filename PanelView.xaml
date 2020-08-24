@@ -16,19 +16,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ComboBox x:Name="drivesPick" x:FieldModifier="private"
-            Width="32" HorizontalAlignment="Left"
+            Width="64" HorizontalAlignment="Left"
             DropDownOpened="CallDrivesOpen"
+            SelectionChanged="CallDriveSelectionChanged"
             ItemsSource="{Binding ElementName=Root, Path=DrivesList}"
+            SelectedIndex="{Binding ElementName=Root, Path=SelectedDriveIndex, Mode=TwoWay}"
             />
         <TextBox x:Name="pathDisplay" x:FieldModifier="private"
-            HorizontalAlignment="Stretch" Margin="36,0,4,0"
-            Text="{Binding Path=TotalPath, Mode=TwoWay}"
+            HorizontalAlignment="Stretch" Margin="68,0,4,0"
+            Text="{Binding ElementName=Root, Path=TotalPath, Mode=TwoWay}"
             />
         <ListBox x:Name="itemPick" x:FieldModifier="private"
             Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
             ItemsSource="{Binding ElementName=Root, Path=ItemsList}"
+            SelectedIndex="{Binding ElementName=Root, Path=SelectedItemIndex, Mode=TwoWay}"
             MouseDoubleClick="CallDoubleClickItem"
             />
-        
     </Grid>
 </UserControl>
